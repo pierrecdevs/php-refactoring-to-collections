@@ -15,13 +15,21 @@ $coversAndWallets = $products->filter(function ($product) {
   return Collection::make(['Slim Cover', 'MagSafe Wallet'])->contains($product['product_type']);
 });
 
-$totalCost = 0;
+$variants = $coversAndWallets->map(function ($product) {
+  return $product['variants'];
+});
+
+dd($variants);
+
+$prices = Collection::make([]);
 
 foreach ($coversAndWallets->toArray() as $product) {
   foreach ($product['variants'] as $variant) {
-    $totalCost += $variant['price'];
+    $prices[] = $variant['price'];
   }
 }
+
+$totalCost = $prices->sum();
 
 dd($totalCost);
 // 462.0

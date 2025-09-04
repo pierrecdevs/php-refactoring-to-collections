@@ -87,4 +87,9 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
   {
     return new static(array_reduce($this->items, $callback, $initial));
   }
+
+  public function sum(): int | float
+  {
+    return array_sum($this->items);
+  }
 }
