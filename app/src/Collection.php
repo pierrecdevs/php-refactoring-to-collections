@@ -18,8 +18,18 @@ class Collection
     return new static(array_filter($this->items, $callback));
   }
 
+  public static function make($items)
+  {
+    return new static($items);
+  }
+
   public function toArray()
   {
     return $this->items;
+  }
+
+  public function contains($needle)
+  {
+    return in_array($needle, $this->items);
   }
 }

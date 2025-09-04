@@ -9,10 +9,10 @@ function load_json(string $path)
   return json_decode(file_get_contents(__DIR__ . '/' . $path), true);
 }
 
-$products = new \Pierrecdevs\App\Collection(load_json('data/products.json')['products']);
+$products = Collection::make(load_json('data/products.json')['products']);
 
 $coversAndWallets = $products->filter(function ($product) {
-  return $product['product_type'] == 'Slim Cover' || $product['product_type'] == 'MagSafe Wallet';
+  return Collection::make(['Slim Cover', 'MagSafe Wallet'])->contains($product['product_type']);
 });
 
 $totalCost = 0;
