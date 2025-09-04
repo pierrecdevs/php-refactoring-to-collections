@@ -13,13 +13,10 @@ $totalCost = $products
   ->filter(function ($product) {
     return collect(['Slim Cover', 'MagSafe Wallet'])->contains($product['product_type']);
   })
-  ->map(function ($product) {
+  ->flatMap(function ($product) {
     return $product['variants'];
   })
-  ->flatten(1)
-  ->map(function ($variant) {
-    return $variant['price'];
-  })
+  ->pluck('price')
   ->sum();
 
 dd($totalCost);
