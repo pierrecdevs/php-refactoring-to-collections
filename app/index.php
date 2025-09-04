@@ -16,8 +16,7 @@ $totalCost = $products
   ->flatMap(function ($product) {
     return $product['variants'];
   })
-  ->pluck('price')
-  ->sum();
+  ->sum('price');
 
 dd($totalCost);
 // 462.0
