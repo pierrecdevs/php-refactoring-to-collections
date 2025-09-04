@@ -1,0 +1,17 @@
+{
+    "name": "pierrecdevs/app",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Pierrecdevs\\App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Pierre C"
+        }
+    ],
+    "require": {
+        "symfony/var-dumper": "^7.3"
+    }
+}
