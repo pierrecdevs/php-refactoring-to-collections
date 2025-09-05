@@ -14,14 +14,19 @@ function githubScore(Collection $events)
   return $events
     ->pluck('type')
     ->map(function ($eventType) {
-      return collect([
-        'PushEvent' => 5,
-        'CreateEvent' => 4,
-        'IssuesEvent' => 3,
-        'CommitCommentEvent' => 2,
-      ])->get($eventType, 1);
+      return lookupEventScore($eventType);
     })
     ->sum();
+}
+
+function lookupEventScore($eventType)
+{
+  return collect([
+    'PushEvent' => 5,
+    'CreateEvent' => 4,
+    'IssuesEvent' => 3,
+    'CommitCommentEvent' => 2,
+  ])->get($eventType, 1);
 }
 
 $events = load_json('data/events.json');
