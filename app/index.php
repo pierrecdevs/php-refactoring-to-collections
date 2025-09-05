@@ -10,13 +10,9 @@ $messages = [
 
 function build_comment($messages)
 {
-  $comment = '';
-
-  foreach ($messages as $message) {
-    $comment .= "- {$message}\n";
-  }
-
-  return $comment;
+  return collect($messages)->map(function ($message) {
+    return "- {$message}";
+  })->implode("\n");
 }
 
 dd(build_comment($messages));
