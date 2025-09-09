@@ -4,20 +4,20 @@ networks:
 
 services:
   # Database
-  # database:
-  #   image: postgres:15.3-alpine
-  #   container_name: ${APP_NAME}_postgres
-  #   restart: always
-  #   volumes:
-  #     - ./database:/var/lib/postgresql/data
-  #   ports:
-  #     - 5432:5432
-  #   environment:
-  #     - POSTGRES_USER=${DATABASE_USER}
-  #     - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
-  #     - POSTGRES_DB=${DATABASE_NAME}
-  #   networks:
-  #     - localdev
+  database:
+    image: postgres:15.3-alpine
+    container_name: ${APP_NAME}_postgres
+    restart: always
+    volumes:
+      - ./database:/var/lib/postgresql/data
+    ports:
+      - 5434:5432
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+    networks:
+      - localdev
 
   # WebServer
   webserver:
@@ -65,3 +65,22 @@ services:
     restart: 'no'
     networks:
       - localdev
+
+  # Artisan
+  artisan:
+    build:
+      context: ./php
+      dockerfile: php.Dockerfile
+    container_name: ${APP_NAME}_artisan
+    volumes:
+      - ./app:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - php
+      - database
+    links:
+      - php
+    entrypoint: ['php', '/var/www/html/artisan']
+    networks:
+      - localdev
+
